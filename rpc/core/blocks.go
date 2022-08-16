@@ -159,7 +159,7 @@ func DataCommitment(ctx *rpctypes.Context, query string) (*ctypes.ResultDataComm
 
 	var commitment bytes.HexBytes
 	commitment = root
-	fmt.Println(fmt.Sprintf("\ncommitment: %s begin: %d end: %d", commitment.String(), heights[0], heights[len(heights)-1]))
+	env.Logger.Error("from core", "commitment", commitment.String(), "begin", heights[0], "end", heights[len(heights)-1])
 	// Create data commitment
 	return &ctypes.ResultDataCommitment{DataCommitment: root}, nil
 }
