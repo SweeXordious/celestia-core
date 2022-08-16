@@ -3,6 +3,7 @@ package core
 import (
 	"errors"
 	"fmt"
+	"github.com/tendermint/tendermint/libs/bytes"
 	"sort"
 
 	"github.com/tendermint/tendermint/crypto/merkle"
@@ -156,6 +157,9 @@ func DataCommitment(ctx *rpctypes.Context, query string) (*ctypes.ResultDataComm
 	blockResults := fetchBlocks(heights, len(heights), 0)
 	root := hashDataRoots(blockResults)
 
+	var commitment bytes.HexBytes
+	commitment = root
+	fmt.Println(fmt.Sprintf("\ncommitment: %s begin: %d end: %d", commitment.String(), heights[0], heights[len(heights)-1]))
 	// Create data commitment
 	return &ctypes.ResultDataCommitment{DataCommitment: root}, nil
 }
