@@ -139,9 +139,9 @@ func Commit(ctx *rpctypes.Context, heightPtr *int64) (*ctypes.ResultCommit, erro
 // and then creates a new Merkle root of those data roots.
 func DataCommitment(ctx *rpctypes.Context, query string) (*ctypes.ResultDataCommitment, error) {
 	env.Logger.Error("================")
-	env.Logger.Error("query", query)
+	env.Logger.Error("query", "query", query)
 	heights, err := heightsByQuery(ctx, query)
-	env.Logger.Error("heights", len(heights))
+	env.Logger.Error("heights", "height", len(heights))
 	if err != nil {
 		return nil, err
 	}
