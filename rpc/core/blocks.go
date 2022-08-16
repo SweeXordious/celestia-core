@@ -138,7 +138,10 @@ func Commit(ctx *rpctypes.Context, heightPtr *int64) (*ctypes.ResultCommit, erro
 // DataCommitment collects the data roots over a provided ordered range of blocks,
 // and then creates a new Merkle root of those data roots.
 func DataCommitment(ctx *rpctypes.Context, query string) (*ctypes.ResultDataCommitment, error) {
+	env.Logger.Error("================")
+	env.Logger.Error("query", query)
 	heights, err := heightsByQuery(ctx, query)
+	env.Logger.Error("heights", len(heights))
 	if err != nil {
 		return nil, err
 	}
@@ -154,12 +157,13 @@ func DataCommitment(ctx *rpctypes.Context, query string) (*ctypes.ResultDataComm
 		return nil, err
 	}
 
+	env.Logger.Error("after sort", "heights", len(heights))
 	blockResults := fetchBlocks(heights, len(heights), 0)
+	env.Logger.Error("block results", "len", len(blockResults))
 	root := hashDataRoots(blockResults)
 
 	var commitment bytes.HexBytes
 	commitment = root
-	env.Logger.Error("================")
 	env.Logger.Error("\n\nfrom core\n\n", "commitment", commitment.String(), "begin", heights[0], "end", heights[len(heights)-1])
 	env.Logger.Error("================")
 	// Create data commitment
