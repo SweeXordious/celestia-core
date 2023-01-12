@@ -15,7 +15,7 @@ require (
 	github.com/go-kit/kit v0.12.0
 	github.com/go-kit/log v0.2.1
 	github.com/go-logfmt/logfmt v0.5.1
-	github.com/gofrs/uuid v4.3.0+incompatible
+	github.com/gofrs/uuid v4.3.0+incompatible // indirect
 	github.com/golang/protobuf v1.5.2
 	github.com/golangci/golangci-lint v1.50.1
 	github.com/google/orderedcode v0.0.1
@@ -38,7 +38,6 @@ require (
 )
 
 require (
-	github.com/google/uuid v1.3.0
 	github.com/tendermint/tm-db v0.6.6
 	golang.org/x/crypto v0.1.0
 	golang.org/x/net v0.1.0
@@ -50,14 +49,18 @@ require github.com/vektra/mockery/v2 v2.14.0
 require (
 	github.com/ethereum/go-ethereum v1.10.26
 	github.com/gogo/protobuf v1.3.2
-	github.com/informalsystems/tm-load-test v1.0.0
-	gonum.org/v1/gonum v0.12.0
 	google.golang.org/protobuf v1.28.2-0.20220831092852-f930b1dc76e8
 )
 
 require (
 	github.com/btcsuite/btcd/btcec/v2 v2.2.0 // indirect
 	github.com/decred/dcrd/dcrec/secp256k1/v4 v4.0.1 // indirect
+	github.com/facebookgo/ensure v0.0.0-20160127193407-b4ab57deab51 // indirect
+	github.com/facebookgo/stack v0.0.0-20160209184415-751773369052 // indirect
+	github.com/facebookgo/subset v0.0.0-20150612182917-8dac2c3c4870 // indirect
+	github.com/gotestyourself/gotestyourself v2.2.0+incompatible // indirect
+	github.com/onsi/ginkgo v1.16.2 // indirect
+	gotest.tools v2.2.0+incompatible // indirect
 )
 
 require (
@@ -221,7 +224,6 @@ require (
 	github.com/sanposhiho/wastedassign/v2 v2.0.6 // indirect
 	github.com/sashamelentyev/interfacebloat v1.1.0 // indirect
 	github.com/sashamelentyev/usestdlibvars v1.20.0 // indirect
-	github.com/satori/go.uuid v1.2.0 // indirect
 	github.com/securego/gosec/v2 v2.13.1 // indirect
 	github.com/shazow/go-diff v0.0.0-20160112020656-b6b7b6733b8c // indirect
 	github.com/sirupsen/logrus v1.9.0 // indirect
