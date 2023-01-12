@@ -242,13 +242,18 @@ func TestDataRootInclusionProofResults(t *testing.T) {
 			require.Nil(t, err, "should generate block height data root inclusion proof.")
 
 			size := tc.endQuery - tc.beginQuery + 1
-			dataRoots := make([][]byte, size)
+			dataRootEncodedTuples := make([][]byte, size)
 			for i := 0; i < size; i++ {
-				dataRoots[i] = blocks[tc.beginQuery+i].DataHash
+				encodedTuple, err := EncodeDataRootTuple(
+					uint64(blocks[tc.beginQuery+i].Height),
+					*(*[32]byte)(blocks[tc.beginQuery+i].DataHash),
+				)
+				require.NoError(t, err)
+				dataRootEncodedTuples[i] = encodedTuple
 			}
-			commitment := merkle.HashFromByteSlices(dataRoots)
+			commitment := merkle.HashFromByteSlices(dataRootEncodedTuples)
 
-			err = proof.Proof.Verify(commitment, dataRoots[tc.height-tc.beginQuery])
+			err = proof.Proof.Verify(commitment, dataRootEncodedTuples[tc.height-tc.beginQuery])
 			require.NoError(t, err)
 		} else {
 			require.NotNil(t, err, "shouldn't be able to generate proof.")

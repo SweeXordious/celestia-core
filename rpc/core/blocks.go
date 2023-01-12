@@ -170,7 +170,10 @@ func DataRootInclusionProof(
 	}
 	heights := generateHeightsList(beginBlock, endBlock)
 	blockResults := fetchBlocks(heights, len(heights), 0)
-	proof := proveDataRoots(blockResults, height)
+	proof, err := proveDataRootTuples(blockResults, height)
+	if err != nil {
+		return nil, err
+	}
 	return &ctypes.ResultDataRootInclusionProof{Proof: *proof}, nil
 }
 
@@ -305,14 +308,18 @@ func validateDataRootInclusionProofRequest(height uint64, beginBlock uint64, end
 	return nil
 }
 
-// proveDataRoots returns the merkle inclusion proof for a height.
-func proveDataRoots(blocks []*ctypes.ResultBlock, height int64) *merkle.Proof {
-	dataRoots := make([][]byte, 0, len(blocks))
+// proveDataRootTuples returns the merkle inclusion proof for a height.
+func proveDataRootTuples(blocks []*ctypes.ResultBlock, height int64) (*merkle.Proof, error) {
+	dataRootEncodedTuples := make([][]byte, 0, len(blocks))
 	for _, block := range blocks {
-		dataRoots = append(dataRoots, block.Block.DataHash)
+		encodedTuple, err := EncodeDataRootTuple(uint64(block.Block.Height), *(*[32]byte)(block.Block.DataHash))
+		if err != nil {
+			return nil, err
+		}
+		dataRootEncodedTuples = append(dataRootEncodedTuples, encodedTuple)
 	}
-	_, proofs := merkle.ProofsFromByteSlices(dataRoots)
-	return proofs[height-blocks[0].Block.Height]
+	_, proofs := merkle.ProofsFromByteSlices(dataRootEncodedTuples)
+	return proofs[height-blocks[0].Block.Height], nil
 }
 
 // BlockResults gets ABCIResults at a given height.
